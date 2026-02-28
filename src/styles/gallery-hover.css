@@ -1,0 +1,106 @@
+/* ============================= */
+/* Gallery Item */
+/* ============================= */
+
+.gallery-item {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+}
+.gallery-item img {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  transition:
+    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+
+  will-change: transform;
+}
+.gallery-item:hover img {
+  transform: scale(1.045);
+}
+
+/* ============================= */
+/* Overlay 渐变 */
+/* ============================= */
+
+.gallery-hover {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.82) 0%,
+    rgba(0, 0, 0, 0.35) 45%,
+    rgba(0, 0, 0, 0.0) 75%
+  );
+
+  opacity: 0;
+  transition: opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gallery-item:hover .gallery-hover {
+  opacity: 1;
+}
+
+/* ============================= */
+/* 信息滑入 */
+/* ============================= */
+
+.gallery-hover .info {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+
+  color: #fff;
+  font-size: 13px;
+
+  transform: translateY(10px);
+  opacity: 0;
+
+  transition:
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+
+  transition-delay: 0.05s;
+}
+
+.gallery-item:hover .gallery-hover .info {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ============================= */
+/* 文字层级 */
+/* ============================= */
+
+.gallery-hover .filename {
+  font-weight: 500;
+  font-size: 14px;
+  letter-spacing: 0.3px;
+  margin-bottom: 6px;
+}
+
+.gallery-hover .meta {
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.gallery-hover .tags {
+  margin-top: 8px;
+}
+
+.gallery-hover .tag {
+  display: inline-block;
+  padding: 3px 10px;
+  margin-right: 6px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(4px);
+
+  font-size: 11px;
+}

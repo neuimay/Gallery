@@ -1,0 +1,73 @@
+.map-layout {
+    display: flex;
+    height: 100vh;
+  }
+
+/* 只作用于 panel */
+.photo-scroll {
+  scrollbar-width: thin; /* Firefox */
+  scrollbar-color: var(--scrollbar-thumb) transparent;
+}
+
+/* Chrome / Edge / Safari */
+.photo-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.photo-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.photo-scroll::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 999px;
+  transition: background 0.2s;
+}
+
+.photo-scroll:hover::-webkit-scrollbar-thumb {
+  background: color-mix(in srgb, var(--scrollbar-thumb) 80%, white);
+}
+
+
+
+/* =========================
+   移动端 Bottom Sheet 模式
+   ========================= */
+   @media (max-width: 768px) {
+
+    .map-layout {
+      display: block;
+    }
+  
+    .photo-panel {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+  
+      height: 60vh;              /* 弹出高度 */
+      max-height: 80vh;
+  
+      background: var(--panel-bg);
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+  
+      box-shadow: 0 -10px 30px rgba(0,0,0,0.2);
+  
+      transform: translateY(100%);
+      transition: transform 0.35s ease;
+  
+      z-index: 50;
+    }
+  
+    .photo-panel.open {
+      transform: translateY(0);
+    }
+  
+    /* 内部滚动区域 */
+    .photo-scroll {
+      height: 100%;
+      overflow-y: auto;
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+  }

@@ -1,0 +1,148 @@
+.gallery {
+    column-count: 5;          
+    column-gap: 5px;
+    padding: 5px;
+  }
+
+  .gallery-item {
+    break-inside: avoid;
+    width: 100%;
+    margin-bottom: 5px;
+    overflow: hidden;
+    background: #111;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+
+    transition: transform 0.25s ease;
+    will-change: transform;
+  }
+  
+  .gallery-item:hover {
+    z-index: 2;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  .gallery-item:hover img {
+    transform: scale(1.06);
+  }
+
+  .viewer {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.92);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+  }
+  
+  .viewer img {
+    max-width: 90vw;
+    max-height: 90vh;
+    object-fit: contain;
+  }
+  
+  .nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: white;
+    font-size: 32px;
+    cursor: pointer;
+    padding: 20px;
+    opacity: 0.6;
+  }
+  
+  .nav:hover {
+    opacity: 1;
+  }
+  
+  .nav.prev {
+    left: 20px;
+  }
+  
+  .nav.next {
+    right: 20px;
+  }
+  .viewer-icon {
+    width: 36px;
+    height: 36px;
+  }
+  
+
+
+
+
+  @media (max-width: 1400px) {
+    .gallery {
+      column-count: 3;
+    }
+  }
+  
+  @media (max-width: 900px) {
+    .gallery {
+      column-count: 2;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .gallery {
+      column-count: 1;
+    }
+  }
+  
+
+
+  .photo-marker {
+    width: 30px;
+    height: 30px;
+    border-radius: 14px;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  }
+  
+  .photo-marker:hover {
+    transform: scale(1.1);
+  }
+
+
+  .apple-marker {
+    width: 68px;
+    height: 68px;
+    border-radius: 12px;
+    background-size: cover;
+    background-position: center;
+    border: 3px solid white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .apple-marker:hover {
+    transform: scale(1.05);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+  }
+  
+  .apple-marker .badge {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    background: #007aff;
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 999px;
+    border: 2px solid white;
+  }

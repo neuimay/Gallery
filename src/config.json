@@ -1,0 +1,16 @@
+{
+    "name": "Mei's Gallery",
+    "title": "Mei's Gallery",
+    "description": "",
+    "url": "https://gallery.neuimay.com/",
+    "author": {
+        "name": "neuimay",
+        "url": "https://www.neuimay.com/",
+        "avatar": "/images/myphoto.jpg"
+    },
+    "map": [
+        "maplibre"
+    ],
+    "mapStyle": "builtin",
+    "mapProjection": "mercator"
+}
