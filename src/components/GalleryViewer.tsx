@@ -287,6 +287,7 @@ export default function GalleryViewer({
 }: Props) {
 
   const touchStartX = useRef<number | null>(null)
+  const touchStartDistance = useRef<number | null>(null)
 
   const [scale, setScale] = useState(1)
 
@@ -324,15 +325,59 @@ export default function GalleryViewer({
   }
 
   // ===== Touch 左右滑动切图 =====
+  // const onTouchStart = (e: React.TouchEvent) => {
+  //   touchStartX.current = e.touches[0].clientX
+  // }
+
+  // const onTouchEnd = (e: React.TouchEvent) => {
+  //   if (touchStartX.current === null) return
+  //   const dx = e.changedTouches[0].clientX - touchStartX.current
+  //   touchStartX.current = null
+
+  //   if (Math.abs(dx) < 50) return
+  //   dx > 0 ? onPrev() : onNext()
+  // }
   const onTouchStart = (e: React.TouchEvent) => {
-    touchStartX.current = e.touches[0].clientX
+    if (e.touches.length === 2) {
+      // 双指开始
+      const dx = e.touches[0].clientX - e.touches[1].clientX
+      const dy = e.touches[0].clientY - e.touches[1].clientY
+      touchStartDistance.current = Math.sqrt(dx * dx + dy * dy)
+      return
+    }
+  
+    if (scale === 1) {
+      touchStartX.current = e.touches[0].clientX
+    }
+  }
+
+  const onTouchMove = (e: React.TouchEvent) => {
+    if (e.touches.length === 2 && touchStartDistance.current) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX
+      const dy = e.touches[0].clientY - e.touches[1].clientY
+      const newDistance = Math.sqrt(dx * dx + dy * dy)
+  
+      const scaleFactor = newDistance / touchStartDistance.current
+  
+      setScale(prev => {
+        let next = prev * scaleFactor
+        if (next < 1) next = 1
+        if (next > 4) next = 4
+        return next
+      })
+  
+      touchStartDistance.current = newDistance
+    }
   }
 
   const onTouchEnd = (e: React.TouchEvent) => {
+    if (scale > 1) return   // 🔥 放大时禁止切图
+  
     if (touchStartX.current === null) return
+  
     const dx = e.changedTouches[0].clientX - touchStartX.current
     touchStartX.current = null
-
+  
     if (Math.abs(dx) < 50) return
     dx > 0 ? onPrev() : onNext()
   }
@@ -370,6 +415,7 @@ export default function GalleryViewer({
       "
       onClick={onClose}
       onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
       onTouchEnd={onTouchEnd}
     >
 
