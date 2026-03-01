@@ -45,7 +45,7 @@ export default function SideBar({ theme, toggleTheme }: Props) {
         md:w-12 md:h-screen md:flex md:flex-col md:justify-between md:items-center md:py-6 md:static
 
         /* 移动端 */
-        w-full h-16 bottom-0 left-0
+        w-full h-12 bottom-0 left-0
         flex flex-row justify-around items-center
         border-t border-white/10
       "
