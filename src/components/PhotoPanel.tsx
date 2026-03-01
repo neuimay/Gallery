@@ -53,6 +53,7 @@ export default function PhotoPanel({
         md:h-auto
         md:w-[420px]
         md:rounded-none
+        md:translate-y-0
         ${visible ? 'md:translate-x-0 md:opacity-100' : 'md:translate-x-10 md:opacity-0'}
       `}
     >

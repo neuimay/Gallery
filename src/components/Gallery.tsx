@@ -47,7 +47,7 @@ export default function Gallery() {
 
   return (
     <>
-      <div className="columns-1 sm:columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-[5px] p-[5px]">
+      <div className="columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-[5px] p-[5px]">
         {imageOrder.map(id => {
           const img = imageBaseMap[id]
 
