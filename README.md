@@ -1,6 +1,20 @@
-# Gallery
+<p align="center">
+  <img src="https://github.com/neuimay/Assets/blob/main/gallery.png" alt="gallery" width="100%" />
+</p>
 
-A personal photo gallery project built with React and modern web technologies.
+# <p align="center">GALLEY</p>
+
+<p align="center">
+  <em>
+    A personal photo gallery project built with React and modern web technologies.
+  </em>
+</p>
+
+---
+
+
+
+# Gallery
 
 This project is currently under active development and continuously evolving.
 
