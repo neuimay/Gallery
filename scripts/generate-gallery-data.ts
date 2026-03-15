@@ -160,12 +160,14 @@ async function main() {
       const fullBuffer = await getBufferFromR2(fullKey)
 
       /* 2️⃣ sharp 统一 decode + rotate */
-      const sharpInstance = sharp(fullBuffer).rotate()
-      const metadata = await sharpInstance.metadata()
+      const metadata = await sharp(fullBuffer).metadata()
 
-      const width = metadata.width
-      const height = metadata.height
-      if (!width || !height) continue
+      let width = metadata.width!
+      let height = metadata.height!
+
+      if (metadata.orientation && metadata.orientation >= 5) {
+        ;[width, height] = [height, width]
+      }
 
       const ratio = width / height
 
