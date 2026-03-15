@@ -1,4 +1,4 @@
-import { logo, Home, Tag, Map, Day, Night} from '@/assets/icons'
+import { logo, Home, Tag, Map, Day, Night, Sort} from '@/assets/icons'
 import config from '@/config.json'
 import {useLocation, Link} from 'react-router-dom'
 
@@ -64,7 +64,7 @@ export default function SideBar({ theme, toggleTheme }: Props) {
           <Home className={iconStyle(isHome)}/>
         </button>
 
-        <button className={navBtn}>
+        <button className={navBtn} title='coming soon'>
           {/* <span className={hover}/> */}
           <Tag className={iconHover}/>
         </button>
@@ -73,6 +73,12 @@ export default function SideBar({ theme, toggleTheme }: Props) {
           {/* <span className={hover}/> */}
           <Map className={iconHover}/>
         </Link>
+
+
+        <button className={navBtn} title='coming soon'>
+          {/* <span className={hover}/> */}
+          <Sort className={iconHover}/>
+        </button>
 
         {/* 🌙 Theme Toggle */}
         <button onClick={toggleTheme} className={navBtn}>
