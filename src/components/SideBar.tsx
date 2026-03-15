@@ -57,7 +57,7 @@ export default function SideBar({ theme, toggleTheme }: Props) {
       </div>
 
       {/* Nav */}
-      <nav className="flex flex-row md:flex-col gap-16 md:gap-6">
+      <nav className="flex flex-row md:flex-col gap-8 md:gap-6">
 
         <button className={navBtn}>
           {/* <span className={hoverBg(isHome)}/> */}
