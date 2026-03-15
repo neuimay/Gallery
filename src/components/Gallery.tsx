@@ -3,7 +3,7 @@ import GalleryViewer from './GalleryViewer'
 import GalleryHover from './GalleryHover'
 import { ProgressiveImage } from './ProgressiveImage'
 import { loadImageData } from '@/lib/loadImageData'
-import type { ImageBase, ImageMeta } from '@/types/image'
+import type { ImageBase, ImageMeta, ImageExif } from '@/types/image'
 
 export default function Gallery() {
   const [imageBaseMap, setImageBaseMap] =
@@ -11,6 +11,9 @@ export default function Gallery() {
 
   const [imageMetaMap, setImageMetaMap] =
   useState<Record<string, ImageMeta>>({})
+
+  const [imageExifMap, setImageExifMap] =
+  useState<Record<string, ImageExif>>({})
 
   const [imageOrder, setImageOrder] =
     useState<string[]>([])
@@ -21,6 +24,7 @@ export default function Gallery() {
     loadImageData().then((data) => {
       setImageBaseMap(data.imageBaseMap)
       setImageMetaMap(data.imageMetaMap)
+      setImageExifMap(data.imageExifMap) 
       setImageOrder(data.imageOrder)
       setLoading(false)
     })
@@ -30,6 +34,8 @@ export default function Gallery() {
   const [viewerLoaded, setViewerLoaded] = useState(false)
 
   const active = activeId ? imageBaseMap[activeId] : null
+  const meta = activeId ? imageMetaMap[activeId] : null
+  const exif = activeId ? imageExifMap[activeId] : null
 
   const prev = () => {
     if (!activeId) return
@@ -72,9 +78,11 @@ export default function Gallery() {
         })}
       </div>
 
-      {active && (
+      {active && meta && exif &&  (
         <GalleryViewer
           image={active}
+          meta={meta}
+          exif={exif}
           loaded={viewerLoaded}
           onLoaded={() => setViewerLoaded(true)}
           onClose={() => {
@@ -95,3 +103,6 @@ export default function Gallery() {
     </>
   )
 }
+
+
+

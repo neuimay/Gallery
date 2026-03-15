@@ -9,7 +9,7 @@ html, body {
   margin: 0;
   padding: 0;
   height: 100%;
-  overflow: hidden; /* 关键：禁用 body 滚动 */
+  overflow: hidden; 
 }
 * {
   box-sizing: border-box;
@@ -31,4 +31,14 @@ html, body {
   --text-primary: #ffffff;
   --scrollbar-thumb: #444;
   --scrollbar-track: #111;
+}
+
+/* hide scrollbar but keep scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
