@@ -204,14 +204,25 @@ async function main() {
         const exif = await exifr.parse(fullBuffer, {
           gps: true,
           translateValues: true,
+          reviveValues: false,
         })
+
+        console.log(
+          `🕐 ${id}:`,
+          exif?.DateTimeOriginal,
+          typeof exif?.DateTimeOriginal
+        )
 
         if (exif) {
           exifData = {
             make: exif.Make,
             model: exif.Model,
+            // dateTimeOriginal: exif.DateTimeOriginal
+            //   ? new Date(exif.DateTimeOriginal).toISOString()
+            //   : undefined,
+
             dateTimeOriginal: exif.DateTimeOriginal
-              ? new Date(exif.DateTimeOriginal).toISOString()
+              ? formatExifDate(exif.DateTimeOriginal)
               : undefined,
             exposure: {
               iso: exif.ISO,
@@ -280,3 +291,17 @@ main().catch((err) => {
   console.error('❌ Error:', err)
   process.exit(1)
 })
+
+
+
+function formatExifDate(value: string) {
+  const match = value.match(
+    /^(\d{4}):(\d{2}):(\d{2})\s+(\d{2}):(\d{2}):(\d{2})/
+  )
+
+  if (!match) return undefined
+
+  const [, year, month, day, hour, minute, second] = match
+
+  return `${year}-${month}-${day}T${hour}:${minute}:${second}`
+}
