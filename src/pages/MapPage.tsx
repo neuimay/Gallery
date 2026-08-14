@@ -16,6 +16,7 @@ export default function MapPage({ theme }: MapPageProps) {
 
   // Image Data
   const [imageBaseMap, setImageBaseMap] = useState<Record<string, any>>({})
+  const [imageMetaMap, setImageMetaMap] = useState<Record<string, any>>({})
   const [imageExifMap, setImageExifMap] = useState<Record<string, any>>({})
   const [dataLoaded, setDataLoaded] = useState(false)
   // if selected
@@ -27,13 +28,19 @@ export default function MapPage({ theme }: MapPageProps) {
   // Current Image 
   const currentId = selectedIds[viewerIndex]
   const currentImage = currentId ? imageBaseMap[currentId] : null
+  const currentMeta = currentId ? imageMetaMap[currentId] : null
+  const currentExif = currentId ? imageExifMap[currentId] : null
 
   // Load Data
   useEffect(() => {
     async function init() {
-      const { imageBaseMap, imageExifMap } = await loadImageData()
-
+      const {
+        imageBaseMap,
+        imageMetaMap,
+        imageExifMap,
+      } = await loadImageData()    
       setImageBaseMap(imageBaseMap)
+      setImageMetaMap(imageMetaMap)
       setImageExifMap(imageExifMap)
       setDataLoaded(true)
     }
@@ -131,6 +138,8 @@ export default function MapPage({ theme }: MapPageProps) {
       {viewerOpen && currentImage && (
         <GalleryViewer
           image={currentImage}
+          meta={currentMeta}
+          exif={currentExif}
           loaded={viewerLoaded}
           onLoaded={() => setViewerLoaded(true)}
           onClose={() => setViewerOpen(false)}

@@ -11,27 +11,30 @@ interface Props{
 }
 
 const zoneLabel: Record<string, { tz: string; cities: string[] }> = {
-  "UTC+9": {
+  "GMT+9": {
     tz: "Asia/Tokyo",
-    cities: ["Tokyo", "Nagoya", "Kyoto", "Kanayama"],
+    cities: ["Tokyo", "Nagoya", "Kyoto", "Kanayama", "Osaka", "Kobe", "Wakayama"],
   },
-  "UTC+8": {
+  "GMT+8": {
     tz: "Asia/Shanghai",
-    cities: ["Beijing", "Shanghai", "HongKong", "Anhui", "Jinan", "Hometown", "Nantong", "Hangzhou"],
+    cities: ["Beijing", "Shanghai", "HongKong", "Anhui", "Jinan", "Hometown", "Nantong", "Hangzhou", "Changzhou"],
   },
-  "UTC+3": {
+  "GMT+3": {
     tz: "Asia/Qatar",
     cities: ["Doha"],
   },
-  "UTC+0": {
+  "GMT+0": {
     tz: "Europe/London",
     cities: ["London", "Leeds", "Dublin", "Galway", "Westport"],
   },
 }
 
 export default function InfoPanel({ meta, exif, open, onClose }: Props) {
+  console.log('InfoPanel meta:', meta)
+  console.log('InfoPanel exif:', exif)
+
     const city = displayLocation(meta.id)
-    const { zone, tz } = getTimezone(city)
+    const { zone } = getTimezone(city)
 
     let date = ""
     let time = ""
@@ -154,7 +157,11 @@ export default function InfoPanel({ meta, exif, open, onClose }: Props) {
             {exif.make} {exif.model}
           </InfoRow>
 
-            <InfoRow label="Zone">{zone === "UTC+0" ? "UTC" : zone}</InfoRow>
+          {/* <InfoRow label="Zone">{zone === "UTC+0" ? "UTC" : zone}</InfoRow> */}
+
+          <InfoRow label="Time Zone">
+            {zone}
+          </InfoRow>
 
           <InfoRow label="ISO">
             {exif.exposure?.iso}
@@ -225,9 +232,15 @@ function displayName(id: string) {
   const parts = id.split('-')
   return parts[parts.length - 1]
 }
+
+
+// function displayLocation(id: string) {
+//   const parts = id.split('-')
+//   return parts.slice(0, -1).join('-')
+// }
+
 function displayLocation(id: string) {
-  const parts = id.split('-')
-  return parts.slice(0, -1).join('-')
+  return id.split('-')[0]
 }
 
 // function formatDate(date?: string) {
@@ -270,38 +283,59 @@ function getTimezone(city: string) {
       return { zone, tz: data.tz }
     }
   }
-  return { zone: "UTC", tz: "UTC" }
+  return { zone: "GMT", tz: "GMT" }
 }
-function getLocalTime(iso: string, tz: string) {
-  const date = new Date(iso)
+
+function getCameraTime(value: string) {
+  const [datePart, timePart] = value.split("T")
+
+  const [year, month, day] = datePart.split("-")
 
   return {
-    date: date.toLocaleDateString("en-US", {
-      timeZone: tz,
+    date: new Date(
+      Number(year),
+      Number(month) - 1,
+      Number(day)
+    ).toLocaleDateString("en-US", {
       month: "short",
       day: "numeric",
       year: "numeric",
     }),
-    time: date.toLocaleTimeString("en-US", {
-      timeZone: tz,
-      hour12: false,
-    }),
+    time: timePart,
   }
 }
 
-function getCameraTime(iso: string) {
-  const date = new Date(iso)
 
-  return {
-    date: date.toLocaleDateString("en-US", {
-      timeZone: "Asia/Tokyo",
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    }),
-    time: date.toLocaleTimeString("en-US", {
-      timeZone: "Asia/Tokyo",
-      hour12: false,
-    }),
-  }
-}
+// function getLocalTime(iso: string, tz: string) {
+//   const date = new Date(iso)
+
+//   return {
+//     date: date.toLocaleDateString("en-US", {
+//       timeZone: tz,
+//       month: "short",
+//       day: "numeric",
+//       year: "numeric",
+//     }),
+//     time: date.toLocaleTimeString("en-US", {
+//       timeZone: tz,
+//       hour12: false,
+//     }),
+//   }
+// }
+
+// function getCameraTime(iso: string) {
+//   const date = new Date(iso)
+
+//   return {
+//     date: date.toLocaleDateString("en-US", {
+//       timeZone: "Asia/Tokyo",
+//       month: "short",
+//       day: "numeric",
+//       year: "numeric",
+//     }),
+//     time: date.toLocaleTimeString("en-US", {
+//       timeZone: "Asia/Tokyo",
+//       hour12: false,
+//     }),
+//   }
+// }
